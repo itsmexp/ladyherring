@@ -2,8 +2,11 @@
 #define BOARD_H
 
 #include <string>
+#include <iostream>
+#include <vector>
 
 int pc(int row, int col);
+
 
 enum Piece{
     EMPTY = 0,
@@ -14,17 +17,27 @@ enum Piece{
 };
 
 class Board{
-    int * board;
+    Piece * board;
+    std::vector<int> whitePieces;
+    std::vector<int> blackPieces;
     bool whiteTurn;
 
     public:
         Board();
         Board(const Board &board);
-        bool const isWhiteTurn();
-        int const getPiece(int n);
-        void setPiece(int n, int piece);
+        bool isWhiteTurn() const;
+        Piece getPiece(int n) const;
+        void setPiece(int n, Piece piece);
+        bool isEnemy(int n) const;
+        bool isKing(int n) const;
+        bool isEmpty(int n) const;
+        bool isWhite(int n) const;
+        bool isRowEven(int n) const;
+        bool isValid(int n) const;
+        bool isPacman(int n, int m) const;
         void changeTurn();
         ~Board();
+        friend std::ostream& operator<<(std::ostream& os, const Board& board);
 };
 
 #endif //BOARD_H

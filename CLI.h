@@ -3,6 +3,7 @@
 
 #include "Board.h"
 
-void printBoard(const Board &board);
+char getPieceChar(Piece p);
+void printBoard(Board board);
 
 #endif //CLI_H

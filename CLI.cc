@@ -22,16 +22,26 @@ char getPieceChar(Piece p)
 
 void printBoard(Board b)
 {
-    for(int i = 0; i < 32; i++)
-    {
-        if (i % 4 == 0)
-            std::cout << std::endl << 8 - i / 4 << " ";
-        if ((i / 4) % 2 == 0)
-            std::cout << " " << getPieceChar(b.getPiece(i));
-        else
-            std::cout << getPieceChar(b.getPiece(i)) << " ";
+    std::cout << "+---+---+---+---+---+---+---+---+" << std::endl;
+    for(int i = 0; i < 64; i++){
+        if(i % 2 == 1){
+            std::cout << "| " << getPieceChar(b.getPiece(i/2)) << " ";
+        }
+        else{
+            std::cout << "|   ";
+        }
+        if(i % 8 == 7){
+            if (i % 16 != 15){
+                std::cout << "| " << 8 - i/8 << std::endl;
+                i++;
+            }
+            else 
+                std::cout << "|   | " << 8 - i/8 << std::endl;
+            std::cout << "+---+---+---+---+---+---+---+---+" << std::endl;
+        }
+        
     }
-    std::cout << std::endl << "  abcdefgh" << std::endl;
+    std::cout << "  a   b   c   d   e   f   g   h" << std::endl;
 }
 
 std::ostream & operator<<(std::ostream & os, const Board & board)

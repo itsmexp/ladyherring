@@ -5,11 +5,6 @@
 int main() {
     Board board;
     std::vector<Board> moves = getPossibleMoves(board);
-    while(moves.size() > 0)
-    {
-        std::cout << moves[0] << "-------------------------------";   
-        board = moves[0];
-        moves = getPossibleMoves(board);
-    }
+    printBoard(moves[0]);   
     return 0;
 }

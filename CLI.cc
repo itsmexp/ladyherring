@@ -20,7 +20,7 @@ char getPieceChar(Piece p)
     }
 }
 
-void printBoard(Board b)
+void printBoard(const Board & b)
 {
     std::cout << "+---+---+---+---+---+---+---+---+" << std::endl;
     for(int i = 0; i < 64; i++){
@@ -42,19 +42,45 @@ void printBoard(Board b)
         
     }
     std::cout << "  a   b   c   d   e   f   g   h" << std::endl;
+    std::cout << "FEN: " << FEN(b) << std::endl;
+}
+
+std::string FEN(const Board &board)
+{
+    std::string fen = "";
+    std::string tempFen = "";
+    int spaceCount = 0;
+    for(int i = 0; i < 32; i++)
+    {
+        if (board.getPiece(i) == EMPTY)
+            spaceCount++;
+        else
+        {
+            if (spaceCount > 0)
+            {
+                tempFen += std::to_string(spaceCount);
+                spaceCount = 0;
+            }
+            tempFen += getPieceChar(board.getPiece(i));
+        }
+        if(i % 4 == 3){
+            if (spaceCount > 0)
+            {
+                tempFen += std::to_string(spaceCount);
+                spaceCount = 0;
+            }
+            fen = tempFen + "/" + fen;
+            tempFen = "";
+        }
+    }
+    fen = fen.substr(0, fen.length() - 1);
+    fen += " ";
+    fen += board.isWhiteTurn() ? "w" : "b";
+    return fen;
 }
 
 std::ostream & operator<<(std::ostream & os, const Board & board)
 {
-    for(int i = 0; i < 32; i++)
-    {
-        if (i % 4 == 0)
-            os << std::endl;
-        if ((i / 4) % 2 == 0)
-            os << " " << getPieceChar(board.board[i]);
-        else
-            os << getPieceChar(board.board[i]) << " ";
-    }
-    os << std::endl;
+    os << FEN(board);
     return os;
 }

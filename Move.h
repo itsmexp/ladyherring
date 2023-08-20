@@ -6,8 +6,6 @@
 #include <iostream>
 
 std::vector<Board> getPossibleMoves(const Board & board);
-std::vector<Board> getPiecePossibleMoves(const Board & board, int n);
-std::vector<Board> getKingPossibleMoves(const Board & board, int n);
-std::vector<Board> getManPossibleMoves(const Board & board, int n);
+std::vector<Board> getPiecePossibleMoves(const Board & board, int row, int col, bool & eat);
 
 #endif

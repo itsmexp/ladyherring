@@ -26,6 +26,7 @@ class Board{
         Board();
         Board(const Board &board);
         bool isWhiteTurn() const;
+        // codifica lineare delle coordinate
         Piece getPiece(int n) const;
         void setPiece(int n, Piece piece);
         bool isEnemy(int n) const;
@@ -35,6 +36,15 @@ class Board{
         bool isRowEven(int n) const;
         bool isValid(int n) const;
         bool isPacman(int n, int m) const;
+        // codifica matriciale delle coordinate
+        Piece getPiece(int row, int col) const;
+        void setPiece(int row, int col, Piece piece);
+        bool isEnemy(int row, int col) const;
+        bool isKing(int row, int col) const;
+        bool isEmpty(int row, int col) const;
+        bool isWhite(int row, int col) const;
+        bool isValid(int row, int col) const;
+    
         void changeTurn();
         ~Board();
         friend std::ostream& operator<<(std::ostream& os, const Board& board);

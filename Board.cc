@@ -89,6 +89,28 @@ bool Board::isValid(int n) const
     return n < 32 && n >= 0;
 }
 
+Piece Board::getPiece(int row, int col) const{
+    return getPiece(pc(row, col));
+}
+void Board::setPiece(int row, int col, Piece piece){
+    setPiece(pc(row, col), piece);
+}
+bool Board::isEnemy(int row, int col) const{
+    return isEnemy(pc(row, col));
+}
+bool Board::isKing(int row, int col) const{
+    return isKing(pc(row, col));
+}
+bool Board::isEmpty(int row, int col) const{
+    return isEmpty(pc(row, col));
+}
+bool Board::isWhite(int row, int col) const{
+    return isWhite(pc(row, col));
+}
+bool Board::isValid(int row, int col) const{
+    return (row+col)%2 == 1 && row >= 0 && row <= 7 && col >= 0 && col <= 7 && isValid(pc(row, col));
+}
+
 bool Board::isPacman(int n, int m) const
 {
     if(n % 4 == 0 && m % 4 == 3)

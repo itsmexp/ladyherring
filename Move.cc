@@ -1,97 +1,67 @@
 #include "Move.h"
 
-int moveOffset[4][2] = {{-4, -3}, {-5, -4}, {4, 5}, {3, 4}};
-int jumpOffset[4] = {-7, -9, 9, 7};
-
-enum Direction{
-    NE = 0,
-    NW = 1,
-    SE = 2,
-    SW = 3
-};
-
-std::vector<Board> getPossibleMoves(const Board & board)
-{
+std::vector<Board> getPossibleMoves(const Board & board){
     std::vector<Board> moves;
-    if(board.isWhiteTurn())
-    {
-        for(int i = 0; i < 32; i++)
-        {
-            if(board.getPiece(i) > 0)
-            {
-                std::vector<Board> pieceMoves = getPiecePossibleMoves(board, i);
-                moves.insert(moves.end(), pieceMoves.begin(), pieceMoves.end());
+    int turn = board.isWhiteTurn() ? 1 : -1;
+    bool eat = false;
+    bool oldEat = false;
+    for(int i = 0; i < 32; i++){
+        unsigned row = i/4;
+        unsigned col = (i%4)*2 + ((row+1)%2);
+        if(board.getPiece(row, col) * turn > 0){
+            std::vector<Board> pieceMoves = getPiecePossibleMoves(board, row, col, eat);
+            if(eat != oldEat){
+                moves.clear();
+                oldEat = eat;
             }
-        }
-    }
-    else
-    {
-        for(int i = 0; i < 32; i++)
-        {
-            if(board.getPiece(i) < 0)
-            {
-                std::vector<Board> pieceMoves = getPiecePossibleMoves(board, i);
-                moves.insert(moves.end(), pieceMoves.begin(), pieceMoves.end());
-            }
+            moves.insert(moves.end(), pieceMoves.begin(), pieceMoves.end());
         }
     }
     return moves;
 }
 
-std::vector<Board> getPiecePossibleMoves(const Board & board , int n)
-{
-    if (board.isKing(n))
-        return getKingPossibleMoves(board, n);
-    else
-        return getManPossibleMoves(board, n);
-}
-
-std::vector<Board> getKingPossibleMoves(const Board &board, int n)
-{
+std::vector<Board> getPiecePossibleMoves(const Board &board, int row, int col, bool & eat){
     std::vector<Board> possibleMoves;
-    int offset = board.isRowEven(n) ? 1 : 0;
-    for(int i = 0; i < 4; i++){
-        if(board.isValid(n + moveOffset[i][offset]) && board.isEmpty(n + moveOffset[i][offset]) && !board.isPacman(n, n + moveOffset[i][offset]))
-        {
-            Board newBoard(board);
-            newBoard.setPiece(n + moveOffset[i][offset], newBoard.getPiece(n));
-            newBoard.setPiece(n, EMPTY);
-            newBoard.changeTurn();
-            possibleMoves.push_back(newBoard);
-        }
-    }
-    return possibleMoves;
-}
-
-std::vector<Board> getManPossibleMoves(const Board &board, int n)
-{
-    std::vector<Board> possibleMoves;
-    int offset = board.isRowEven(n) ? 1 : 0;
-    if(board.isWhiteTurn())
-    {
-        for(int i = 0; i < 2; i++)
-        {
-            if(board.isValid(n + moveOffset[i][offset]) && board.isEmpty(n + moveOffset[i][offset]) && !board.isPacman(n, n + moveOffset[i][offset]))
-            {
-                Board newBoard(board);
-                newBoard.setPiece(n + moveOffset[i][offset], newBoard.getPiece(n));
-                newBoard.setPiece(n, EMPTY);
-                newBoard.changeTurn();
-                possibleMoves.push_back(newBoard);
-            }
-        }
-    }
-    else
-    {
-        for(int i = 2; i < 4; i++)
-        {
-            if(board.isValid(n + moveOffset[i][offset]) && board.isEmpty(n + moveOffset[i][offset]) && !board.isPacman(n, n + moveOffset[i][offset]))
-            {
-                Board newBoard(board);
-                newBoard.setPiece(n + moveOffset[i][offset], newBoard.getPiece(n));
-                newBoard.setPiece(n, EMPTY);
-                newBoard.changeTurn();
-                possibleMoves.push_back(newBoard);
+    int player = board.isWhite(row, col) ? 1 : -1;
+    int type = board.isKing(row, col) ? 2 : 1;
+    for(int i = -1;i < 2;i+=2){
+        for(int j = -1;j < 2;j+=2){
+            if(board.isValid(row + i, col + j) && (type == 2 || player != i)){
+                if(board.isEmpty(row + i, col + j) && !eat){
+                    Board newBoard(board);
+                    if(row + i == 0 || row + i == 7){
+                        newBoard.setPiece(row + i, col + j, (Piece)(player*2));
+                    } else {
+                        newBoard.setPiece(row + i, col + j, (Piece)(type*player));
+                    }
+                    newBoard.setPiece(row, col, EMPTY);
+                    newBoard.changeTurn();
+                    possibleMoves.push_back(newBoard);
+                } else if (!board.isEmpty(row+i, col+j) && board.isWhite(row+i, col+j) != board.isWhiteTurn()){
+                    if(board.isValid(row + 2*i, col + 2*j) && (!board.isKing(row+i, col+i) || type == 2)){ 
+                        if(board.isEmpty(row + 2*i, col + 2*j)){
+                            if(!eat){
+                                eat = true;
+                                possibleMoves.clear();
+                            }
+                            Board newBoard(board);
+                            if(row + 2*i == 0 || row + 2*i == 7){
+                                newBoard.setPiece(row + 2*i, col + 2*j, (Piece)(player*2));
+                            } else {
+                                newBoard.setPiece(row + 2*i, col + 2*j, (Piece)(type*player));
+                            }
+                            newBoard.setPiece(row, col, EMPTY);
+                            newBoard.setPiece(row + i, col + j, EMPTY);
+                            std::vector<Board> newMoves = getPiecePossibleMoves(newBoard, row + 2*i, col + 2*j, eat);
+                            if(newMoves.empty()){
+                                newBoard.changeTurn();
+                                possibleMoves.push_back(newBoard);
+                            } else {
+                                possibleMoves.insert(possibleMoves.end(), newMoves.begin(), newMoves.end());
+                            }
+                        }
+                    }
+                }
             }
         }
     }

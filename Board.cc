@@ -3,8 +3,6 @@
 Board::Board()
 {
     board = new Piece[32];
-    whitePieces = std::vector<int>({20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31});
-    blackPieces = std::vector<int>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ,10, 11});
     for(int i = 0; i < 32; i++){
         if(i < 12)
             board[i] = BLACK;
@@ -23,8 +21,43 @@ Board::Board(const Board &board)
     for(int i = 0; i < 32; i++)
         this->board[i] = board.board[i];
     this->whiteTurn = board.whiteTurn;
-    this->whitePieces = board.whitePieces;
-    this->blackPieces = board.blackPieces;
+}
+
+Board::Board(std::string fen, bool whiteTurn = true)
+{
+    board = new Piece[32];
+    int i = 7;
+    int j = 0;
+    for(char c : fen)
+    {
+        switch (c)
+        {
+            case 'w':
+                board[pc(i, j)] = WHITE;
+                j+=2;
+                break;
+            case 'b':
+                board[pc(i, j)] = BLACK;
+                j+=2;
+                break;
+            case 'W':
+                board[pc(i, j)] = WHITE_KING;
+                j+=2;
+                break;
+            case 'B':
+                board[pc(i, j)] = BLACK_KING;
+                j+=2;
+                break;
+            case '/':
+                i--;
+                j = 0;
+                break;
+            default:
+                j += (c - '0') * 2;
+                break;
+        }
+    }
+    this->whiteTurn = whiteTurn;
 }
 
 bool Board::isWhiteTurn() const

@@ -4,7 +4,7 @@ void startCLI(Board &board)
 {
     std::cout << "Welcome to Lady Herring!" << std::endl;
     std::cout << "Type 'help' for a list of commands." << std::endl;
-    std::regex pattern("\\w+");
+    std::regex pattern("\\S+");
     std::string command;
     std::vector<std::string> params;
     do{
@@ -116,6 +116,8 @@ void eseguiComandoCLI(Board &board, std::string command, std::vector<std::string
         commandClear();
     else if (command == "reset")
         commandReset(board);
+    else if (command == "create")
+        commandCreateFromFEN(board, params);
     else
         std::cout << "Unknown command. Type 'help' for a list of commands." << std::endl;
 }
@@ -127,6 +129,7 @@ void commandHelp()
     std::cout << "move <from> <to>: move a piece from <from> to <to>" << std::endl;
     std::cout << "print: print the board" << std::endl;
     std::cout << "fen: print the FEN of the board" << std::endl;
+    std::cout << "create <fen>: create a board from the given FEN" << std::endl;
     std::cout << "reset: reset the board" << std::endl;
     std::cout << "clear: clear the screen" << std::endl;
     std::cout << "exit: exit the program" << std::endl;
@@ -157,6 +160,23 @@ void commandMove(Board &board, std::vector<std::string> &params)
 void commandReset(Board &board)
 {
     board.reset();
+}
+
+void commandCreateFromFEN(Board &board, std::vector<std::string> &params)
+{
+    if (params.size() > 2 || params.size() < 1)
+    {
+        std::cout << "Wrong number of parameters." << std::endl;
+        return;
+    }
+    if (params.size() == 1)
+    {
+        board = Board(params[0]);
+        return;
+    } else{
+        bool turn = params[1] == "w";
+        board = Board(params[0], turn);
+    }
 }
 
 void commandClear()

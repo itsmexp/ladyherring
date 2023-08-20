@@ -7,7 +7,6 @@
 
 int pc(int row, int col);
 
-
 enum Piece{
     EMPTY = 0,
     WHITE = 1,
@@ -18,13 +17,12 @@ enum Piece{
 
 class Board{
     Piece * board;
-    std::vector<int> whitePieces;
-    std::vector<int> blackPieces;
     bool whiteTurn;
 
     public:
         Board();
         Board(const Board &board);
+        Board(std::string fen, bool whiteTurn);
         bool isWhiteTurn() const;
         // codifica lineare delle coordinate
         Piece getPiece(int n) const;

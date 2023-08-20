@@ -44,7 +44,7 @@ class Board{
         bool isEmpty(int row, int col) const;
         bool isWhite(int row, int col) const;
         bool isValid(int row, int col) const;
-    
+        void reset();
         void changeTurn();
         ~Board();
         friend std::ostream& operator<<(std::ostream& os, const Board& board);

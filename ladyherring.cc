@@ -4,10 +4,6 @@
 
 int main() {
     Board board;
-    std::vector<Board> moves = getPossibleMoves(board);
-    while (moves.size() > 0) {
-        std::cout << moves[0] << std::endl;
-        moves = getPossibleMoves(moves[0]);
-    } 
+    startCLI(board);
     return 0;
 }

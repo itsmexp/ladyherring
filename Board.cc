@@ -111,6 +111,19 @@ bool Board::isValid(int row, int col) const{
     return (row+col)%2 == 1 && row >= 0 && row <= 7 && col >= 0 && col <= 7 && isValid(pc(row, col));
 }
 
+void Board::reset()
+{
+    for(int i = 0; i < 32; i++){
+        if(i < 12)
+            board[i] = BLACK;
+        else if(i > 19)
+            board[i] = WHITE;
+        else
+            board[i] = EMPTY;
+    }
+    whiteTurn = true;
+}
+
 bool Board::isPacman(int n, int m) const
 {
     if(n % 4 == 0 && m % 4 == 3)

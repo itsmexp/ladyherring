@@ -2,8 +2,9 @@
 Lady Herring è un motore di analisi per le partite di dama italiana.
 
 ## Roadmap
-- [ ] Implementazione della damiera
-- [ ] Implementazione delle mosse possibili
+- [x] Implementazione della damiera
+- [x] Implementazione delle mosse possibili
+- [ ] Implementazione di un algoritmo intelligente per la scelta delle mosse (bot)
 
 ## Informazioni
 ![Codifica Damiera](/README/damiera.png)

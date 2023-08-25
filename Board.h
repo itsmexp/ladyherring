@@ -48,4 +48,6 @@ class Board{
         friend std::ostream& operator<<(std::ostream& os, const Board& board);
 };
 
+bool operator==(const Board & b1, const Board & b2);
+
 #endif //BOARD_H

@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <iostream>
 
 Board::Board()
 {
@@ -141,6 +142,7 @@ bool Board::isWhite(int row, int col) const{
     return isWhite(pc(row, col));
 }
 bool Board::isValid(int row, int col) const{
+    //std::cout << std::endl << "row: " << row << " col: " << col << " pc(row, col): " << pc(row, col) << " (row+col)%2 " << (row+col)%2 << " isValid(pc(row, col)) " << isValid(pc(row, col)) << std::endl;
     return (row+col)%2 == 1 && row >= 0 && row <= 7 && col >= 0 && col <= 7 && isValid(pc(row, col));
 }
 
@@ -164,4 +166,14 @@ bool Board::isPacman(int n, int m) const
     if(n % 4 == 3 && m % 4 == 0)
         return true;
     return false;
+}
+
+bool operator==(const Board & b1, const Board & b2){
+    for(int i=0;i<32;i++){
+        if(b1.getPiece(i) != b2.getPiece(i)){
+            //std::cout<<b1.getPiece(i) << " " << b2.getPiece(i) << std::endl;
+            return false;
+        }
+    }
+    return true;
 }

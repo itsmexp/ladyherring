@@ -155,9 +155,13 @@ void commandMove(Board &board, std::vector<std::string> &params)
     }
     int from = (params[0][0] - 'a' + (8 - (params[0][0] - 'a')) * 8) / 2;
     int to = (params[1][0] - 'a' + (8 - (params[1][1] - '0')) * 8 ) / 2;
-    board = makeMove(board, 8-((params[0][1] - '0')), params[0][0] - 'a', 8-((params[1][1] - '0')), params[1][0] - 'a');
-    //std::cout << "8-((" << params[0][1] << " - '0')): " << 8-((params[0][1] - '0')) << " params[0][0] - 'a': " << params[0][0] - 'a' << " 8-(("<<(int)params[1][1]-(int)('0')<<")): " << 8-(((int)(params[1][1]) - (int)('0'))) << " params[1][0] - 'a': " << params[1][0] - 'a' << std::endl;
-    std::cout << "Moving from " << params[0] << " to " << params[1] << std::endl;
+    Board newBoard = makeMove(board, 8-((params[0][1] - '0')), params[0][0] - 'a', 8-((params[1][1] - '0')), params[1][0] - 'a');
+    if(board == newBoard){
+        std::cout << "mossa non valida" << std::endl;
+    } else {
+        board = newBoard;
+        std::cout << "Moving from " << params[0] << " to " << params[1] << std::endl;
+    }
 }
 
 void commandReset(Board &board)

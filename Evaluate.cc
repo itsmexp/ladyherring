@@ -1,6 +1,6 @@
-#include "Eval.h"
+#include "Evaluate.h"
 
-int eval(const Board &board, int type = 0)
+int evaluate(const Board &board, int type = 0)
 {
     switch(type)
     {

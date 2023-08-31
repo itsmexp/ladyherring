@@ -3,7 +3,7 @@
 
 #include "Board.h"
 
-int eval(const Board & board, int type);
+int evaluate(const Board & board, int type);
 int getPieceValue(Piece p);
 int simpleEval(const Board & board);
 int complexEval(const Board & board); 

@@ -1,5 +1,4 @@
 #include "CLI.h"
-#include "Move.h"
 
 void startCLI(Board &board)
 {
@@ -169,7 +168,7 @@ void commandMove(Board &board, std::vector<std::string> &params)
 
 void commandComputerMove(Board & board, std::vector<std::string> &params)
 {
-    //board = bestMove(board);
+    board = bestMove(board);
     printBoard(board);
 }
 
@@ -181,19 +180,12 @@ void commandReset(Board &board)
 
 void commandCreateFromFEN(Board &board, std::vector<std::string> &params)
 {
-    if (params.size() > 2 || params.size() < 1)
+    if (params.size() != 2)
     {
         std::cout << "Wrong number of parameters." << std::endl;
         return;
     }
-    if (params.size() == 1)
-    {
-        board = Board(params[0]);
-        return;
-    } else{
-        bool turn = params[1] == "w";
-        board = Board(params[0], turn);
-    }
+    board = Board(params[0], params[1] == "w");
 }
 
 void commandClear()

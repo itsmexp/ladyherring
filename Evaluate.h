@@ -1,5 +1,5 @@
-#ifndef EVAL_H
-#define EVAL_H
+#ifndef EVALUATE_H
+#define EVALUATE_H
 
 #include "Board.h"
 
@@ -8,4 +8,4 @@ int getPieceValue(Piece p);
 int simpleEval(const Board & board);
 int complexEval(const Board & board); 
 
-#endif //EVAL_H
+#endif //EVALUATE_H

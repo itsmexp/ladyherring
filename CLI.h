@@ -1,7 +1,8 @@
 #ifndef CLI_H
 #define CLI_H
 
-
+#include "Move.h"
+#include "Search.h"
 #include "Board.h"
 #include <string>
 #include <regex>

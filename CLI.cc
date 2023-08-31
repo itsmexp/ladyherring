@@ -21,7 +21,7 @@ void startCLI(Board &board)
             break;
         command = params[0];
         params.erase(params.begin());
-        eseguiComandoCLI(board, command, params);
+        executeCommand(board, command, params);
     } while (true);
     return;
 }
@@ -103,12 +103,14 @@ std::string getFEN(const Board &board)
     return fen;
 }
 
-void eseguiComandoCLI(Board &board, std::string command, std::vector<std::string> & params)
+void executeCommand(Board &board, std::string command, std::vector<std::string> & params)
 {
     if (command == "help")
         commandHelp();
     else if (command == "move")
         commandMove(board, params);
+    else if (command == "cmove")
+        commandComputerMove(board, params);
     else if (command == "print")
         commandPrint(board);
     else if (command == "fen")
@@ -162,11 +164,19 @@ void commandMove(Board &board, std::vector<std::string> &params)
         board = newBoard;
         std::cout << "Moving from " << params[0] << " to " << params[1] << std::endl;
     }
+    printBoard(board);
+}
+
+void commandComputerMove(Board & board, std::vector<std::string> &params)
+{
+    //board = bestMove(board);
+    printBoard(board);
 }
 
 void commandReset(Board &board)
 {
     board.reset();
+    printBoard(board);
 }
 
 void commandCreateFromFEN(Board &board, std::vector<std::string> &params)

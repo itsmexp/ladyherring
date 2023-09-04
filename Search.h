@@ -5,6 +5,7 @@
 #include "Evaluate.h"
 #include "Move.h"
 #include <vector>
+#include <limits>
 
 int search(const Board & board, int depth, int alpha, int beta);
 Board bestMove(const Board & board);

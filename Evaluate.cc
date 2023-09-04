@@ -36,11 +36,10 @@ int simpleEval(const Board &board)
     {
         value += getPieceValue(board.getPiece(i));
     }
-    return 0;
+    return value;
 }
 
 int complexEval(const Board &board)
 {
-    //todo
     return simpleEval(board);
 }

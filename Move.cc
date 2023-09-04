@@ -38,7 +38,7 @@ std::vector<Board> getPossibleMoves(const Board & board){
     return moves;
 }
 
-std::vector<Board> getPiecePOssibleMoves(const Board &board, int row, int col){
+std::vector<Board> getPiecePossibleMoves(const Board &board, int row, int col){
     bool eat = false;
     return getPiecePossibleMoves(board, row, col, eat);
 }
@@ -59,7 +59,6 @@ std::vector<Board> getPiecePossibleMoves(const Board &board, int row, int col, b
                     newBoard.setPiece(row + i, col + j, (Piece)(type*player));
                 }
                 newBoard.setPiece(row, col, EMPTY);
-                if(i == -1 && j == 1)
                 newBoard.changeTurn();
                 possibleMoves.push_back(newBoard);
             } else if (canEat(board, row, col, row + 2*i, col + 2*j) && (!haveToEatKing || board.isKing(row+1, col+1))){
@@ -87,9 +86,13 @@ std::vector<Board> getPiecePossibleMoves(const Board &board, int row, int col, b
                             newBoard.changeTurn();
                             possibleMoves.push_back(newBoard);
                         } else {
+                            for(int i = 0; i < newMoves.size(); i++){
+                                newMoves[i].changeTurn();
+                            }
                             possibleMoves.insert(possibleMoves.end(), newMoves.begin(), newMoves.end());
                         }
                     } else {
+                        newBoard.changeTurn();
                         possibleMoves.push_back(newBoard);
                     }
                 }

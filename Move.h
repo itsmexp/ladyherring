@@ -6,7 +6,7 @@
 #include <iostream>
 
 std::vector<Board> getPossibleMoves(const Board & board);
-std::vector<Board> getPiecePOssibleMoves(const Board & board, int row, int col);
+std::vector<Board> getPiecePossibleMoves(const Board & board, int row, int col);
 std::vector<Board> getPiecePossibleMoves(const Board & board, int row, int col, bool & eat);
 bool canMove(const Board & board, int row, int col, int newRow, int newCol);
 bool canEat(const Board & board, int row, int col, int newRow, int newCol);

@@ -1,8 +1,4 @@
 #include "Search.h"
-#include "Board.h"
-#include "Evaluate.h"
-#include "Move.h"
-#include <vector>
 
 int search(const Board & board, int depth, int alpha, int beta){
     if(depth == 0){

@@ -6,5 +6,5 @@ clean:
 	rm ladyherring
 
 run:
-	g++ ladyherring.cc -o ladyherring
+	g++ ladyherring.cc Search.cc Evaluate.cc -o ladyherring
 	./ladyherring

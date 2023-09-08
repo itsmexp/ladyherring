@@ -112,6 +112,8 @@ void executeCommand(Board &board, std::string command, std::vector<std::string> 
         commandComputerMove(board, params);
     else if (command == "print")
         commandPrint(board);
+    else if (command == "auto")
+        commandAutoPlay(board, params);
     else if (command == "fen")
         commandFEN(board);
     else if (command == "clear")
@@ -129,6 +131,7 @@ void commandHelp()
     std::cout << "List of commands:" << std::endl;
     std::cout << "help: print this list" << std::endl;
     std::cout << "move <from> <to>: move a piece from <from> to <to>" << std::endl;
+    std::cout << "auto <n>: make <n> moves automatically" << std::endl;
     std::cout << "print: print the board" << std::endl;
     std::cout << "fen: print the FEN of the board" << std::endl;
     std::cout << "create <fen>: create a board from the given FEN" << std::endl;
@@ -170,6 +173,21 @@ void commandComputerMove(Board & board, std::vector<std::string> &params)
 {
     board = bestMove(board);
     printBoard(board);
+}
+
+void commandAutoPlay(Board &board, std::vector<std::string> &params)
+{
+    if (params.size() != 1)
+    {
+        std::cout << "Wrong number of parameters." << std::endl;
+        return;
+    }
+    int n = std::stoi(params[0]);
+    for (int i = 0; i < n; i++)
+    {
+        board = bestMove(board);
+        printBoard(board);
+    }
 }
 
 void commandReset(Board &board)

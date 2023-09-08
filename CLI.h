@@ -19,6 +19,7 @@ void commandPrint(const Board & board);
 void commandFEN(const Board & board);
 void commandMove(Board & board, std::vector<std::string> & params);
 void commandComputerMove(Board & board, std::vector<std::string> & params);
+void commandAutoPlay(Board & board, std::vector<std::string> & params);
 void commandReset(Board & board);
 void commandCreateFromFEN(Board & board, std::vector<std::string> & params);
 void commandClear();

@@ -47,7 +47,6 @@ Board bestMove(const Board & board){
     Board bestBoard;
     for(auto it = moves.begin(); it != moves.end(); it++){
         int score = -search(*it, depth, maxMin, minMax) * type;
-        std::cout << score << std::endl;
         if(score > bestScore || it == moves.begin()){
             bestScore = score;
             bestBoard = *it;

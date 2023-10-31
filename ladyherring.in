@@ -1,7 +1,0 @@
-print
-move a3 b4
-move b6 a5
-move c3 d4
-move a5 c3
-print
-exit
